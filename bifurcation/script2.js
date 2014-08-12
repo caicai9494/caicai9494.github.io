@@ -194,7 +194,7 @@ Circle.prototype.Update = function(){
 					  this.r, randomColor());
 }
 
-
+//make sure ndim is odd
 function System(ndim, a0, canvas){
 	this.atoms = [];
 	
@@ -209,7 +209,7 @@ function System(ndim, a0, canvas){
 	
 	for(var i = 0; i < this.ndim; i++)
 	{
-		this.atoms.push(new Circle(this.c.CWidth/2 - (2 - i) * this.a0 * 50 , 250, 20, canvas));
+		this.atoms.push(new Circle(this.c.CWidth/2 - (Math.floor(this.ndim/2) - i) * this.a0 * 50 , 250, 20, canvas));
 	}
 
 }
@@ -218,7 +218,7 @@ System.prototype.Compulse = function(){
 
 	for(var i = 0; i < this.ndim; i++)
 	{
-		this.atoms[i].x = this.c.CWidth/2 - (2 - i) * (this.a0+this.shift/100) * 50;
+		this.atoms[i].x = this.c.CWidth/2 - (Math.floor(this.ndim/2) - i) * (this.a0+this.shift/100) * 50;
 	}
 
 	if(this.release === 1)
@@ -305,7 +305,7 @@ $(document).ready(
                                     window.webkitRequestAnimationFrame ||
                                     window.msRequestAnimationFrame;
 	
-        var mySystem = new System(5, 1, canvas);  
+        var mySystem = new System(20, 1, canvas);  
 
 		$("#a0form").submit(function(){
 			newA0 = Math.floor($("#a0").val());
