@@ -3,7 +3,6 @@
 <html>
   <head>
     <title>
-      My projects
     </title>
     <link rel="stylesheet" type="text/css" href="stylesheet.css" />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
@@ -17,9 +16,18 @@
 	  
 	
   <body>
-  
-    <p><a href="fall/fall.html">Gravity</a></p>
-    <p><a href="bifurcation/bifurcation.html">Graphine Sheet 1D model</a></p>
+
+    <p id ='savea0'></p>
+	  <canvas id="mycanvas" width='800' height='500'></canvas>
+	  
+	  <form id ='a0form' name ='inputa0'>
+       a0 : <input type='text' id ='a0' value = 'disabled'>
+      <input type='submit'>
+
+      <p>one stable solution of the 1D model, with a0 = 1</p>
+
+      <p>click and drag your mouse</p>
+    </form>
   </body>
   
   

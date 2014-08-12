@@ -13,12 +13,12 @@ function Canvas(canvasID){
 	var c = document.getElementById(this.canvasID);
 	canvasCtx = c.getContext("2d");
 
-	this.CWidth;
-	this.CHeight;
+	this.CWidth = c.width;
+	this.CHeight = c.height;
 
 	
 	
-	var lineWidth = 5;
+	//var lineWidth = 5;
 	//canvasCtx.beginPath();
 	//canvasCtx.arc(100,100,50,0,2*Math.PI);
 	//canvasCtx.stroke();
@@ -59,7 +59,7 @@ function Canvas(canvasID){
 	this.DrawLine = function(Cor1, Cor2, Color){
 		canvasCtx.moveTo(Cor1.xCor, Cor1.yCor);
 		canvasCtx.lineTo(Cor2.xCor, Cor2.yCor);
-		canvasCtx.lineWidth = lineWidth;
+		//canvasCtx.lineWidth = lineWidth;
 		canvasCtx.strokeStyle = Color;
 		canvasCtx.stroke();
 	}
@@ -68,10 +68,37 @@ function Canvas(canvasID){
 	this.DrawCircle = function(Cor,Radius,Color){
 		canvasCtx.beginPath();
 		canvasCtx.arc(Cor.xCor,Cor.yCor,Radius,0,2*Math.PI);
+		canvasCtx.lineWidth = 0;
+		canvasCtx.strokeStyle = 'white';
 		canvasCtx.stroke();
 		canvasCtx.fillStyle = Color;
-		canvasCtx.strokeStyle = 'white';
 		canvasCtx.fill();
+	}
+	
+	this.DrawRect = function(Cor, length, width, color){
+		canvasCtx.beginPath();
+		//canvasCtx.lineWidth = lineWidth;
+		canvasCtx.rect(Cor.xCor,Cor.yCor,width,length);
+		canvasCtx.strokeStyle = 'white';
+		canvasCtx.stroke();
+		canvasCtx.fillStyle = color;
+		canvasCtx.fill();	
+	}
+
+	this.DrawText = function(text,x,y){
+		canvasCtx.font = "20px Georgia";
+		canvasCtx.fillText(text, x, y);
+
+	}
+	
+	this.DrawCurve = function(Cor1, Corp, Cor2, Color){
+		canvasCtx.beginPath();
+		canvasCtx.strokeStyle = Color;
+		canvasCtx.lineWidth = 10;
+		canvasCtx.moveTo(Cor1.xCor, Cor1.yCor);
+		canvasCtx.quadraticCurveTo(Corp.xCor, Corp.yCor, 
+									Cor2.xCor, Cor2.yCor);
+		canvasCtx.stroke();
 	}
 	
 	this.DrawFunc = function(funobj){
@@ -128,7 +155,7 @@ function randInt(low,high){
 }
 
 function distance(cor1, cor2){
-	return Math.sqrt(Math.pow(cor1.x-cor2.x,2) + Math.pow(cor1.y-cor2.y,2));
+	return Math.sqrt(Math.pow(cor1.xCor-cor2.xCor,2) + Math.pow(cor1.yCor-cor2.yCor,2));
 }
 
 function Circle(x,y,r,canvas){
@@ -136,36 +163,126 @@ function Circle(x,y,r,canvas){
 	this.y = y;
 	this.r = r;
 	
+	this.mass = 1000 * (4/3) * Math.Pi * Math.pow(r,3);
+	
 	this.c = canvas;
 	
 	this.velocity = 0;
 	this.energyLost = 0;
 	this.damping = 1;
+	this.selected = 0;
 }
 
-
-Circle.prototype.Update = function(){
-	;
-	//this.c.Clear();
-	this.c.DrawCircle(new Cor(this.x, this.y),
-					  this.r, randomColor());
+Circle.prototype.Fall = function(){
 	if(this.energyLost === 0)
 		this.velocity += 9.8 / 60;
-	this.y += this.velocity;	
-		
+	this.y += this.velocity;		
 	if (this.y > 500 - this.r ){
 		this.velocity = - this.velocity + this.damping;// + this.damping;
 		this.y = 500 - this.r;		
 	}	
 }
 
+Circle.prototype.Function = function(t){
+	return 2 * t;
+}
+
+Circle.prototype.Update = function(){
+	
+	this.Fall();
+	this.c.DrawCircle(new Cor(this.x, this.y),
+					  this.r, randomColor());
+}
+
+
+function System(ndim, a0, canvas){
+	this.atoms = [];
+	
+	this.threshold = a0;
+	
+	this.ndim = ndim;
+	
+	this.a0 = a0;
+	
+	this.c = canvas;
+		
+	this.shift = 0;
+	
+	
+	for(var i = 0; i < this.ndim; i++)
+	{
+		this.atoms.push(new Circle(280 + i * this.a0 * 50, 250, 20, canvas));
+	}
+
+}
+
+System.prototype.Compulse = function(){
+	for(var i = 0; i < this.ndim; i++)
+	{
+		this.atoms[i].x = 280 + i * (this.a0 + Math.abs(this.shift)) * 10/60;
+	}
+	this.shift = 0;
+}
+
+System.prototype.Update = function(){
+
+	this.Compulse();
+	
+	//for(var i = 0; i < this.ndim - 1; i++)
+	//{
+	//	this.atomsDistance[i] = (this.atoms[i].x - this.atoms[i+1].x);
+	//}
+	
+	
+	
+	for(var i = 0; i < this.atoms.length; i++)
+	{	
+		//this.atoms[i].x = 280 + i * (this.a0 + this.shift) * 50;
+		this.c.DrawCircle(new Cor(this.atoms[i].x, this.atoms[i].y),
+						  this.atoms[i].r, randomColor());
+	}
+}
+
+function Board(x,y,canvas){
+	this.posX = x;
+	this.posY = y;
+	
+	this.c = canvas;
+	this.length = 100;
+	this.width = 10;
+}
+//center of the board
+Board.prototype.Update = function(Corp){
+	//this.opacity = .05 + Math.random() * .5;
+	//this.c.DrawRect(new Cor(this.posX-this.length/2, this.posY-this.width/2),
+	//				  this.width, this.length, randomColor());
+					  
+	//this.c.DrawCurve(new Cor(this.posX-this.length/2, this.posY-this.width/2),
+	//				Corp,
+	//				new Cor(this.posX+this.length/2, this.posY-this.width/2),
+	//				randomColor()
+	//				);		
+
+	this.c.DrawCurve(new Cor(this.posX-this.length/2,this.posY-this.width/2),
+					Corp,
+					new Cor(this.posX+this.length/2,this.posY-this.width/2),
+					randomColor());	
+}
 $(document).ready(
 	function(){
 		var canvas = new Canvas("mycanvas");
 		
+
+		//var temp1 = $("#a0").val();
+		//alert(temp1);
+
 		var activated = 0;
-		var ini_x;
-		var ini_y;
+		var ini_x = 0;
+		var ini_y = 0;
+		
+		var myCircles = [];
+		
+		var entered = 0;
 		
 		//canvas.FullScreen();
 		
@@ -174,59 +291,31 @@ $(document).ready(
                                     window.webkitRequestAnimationFrame ||
                                     window.msRequestAnimationFrame;
 	
-		var myCircles = [];
-		
+                
+
+		$("#a0form").submit(function(){
+			var value = $("#a0").val();
+			$("#savea0").text("value");
+			//mySystem = new System(5, value, canvas);
+
+		});
 		$("#mycanvas").on("click",function(event){
-		/*
-			if(typeof myCircles[0] != 'undefined'){
-				var mouse = new Cor(event.pageX,event.pageY);
-				//console.log(myCircles.length);
-			
-				for(var i = 0; i < myCircles.length; i++){
-					if (distance(mouse, new Cor(myCircles[i].x,myCircles[i].y)) < myCircles[i].r)
-						myCircles[i].velocity += Math.sign(myCircles[i].velocity) * 5;
-					
-					else
-						myCircles.push(new Circle(event.pageX,event.pageY, randInt(0,20), canvas));			
-				}
-			
-			}
-			else
-			*/
-		      myCircles.push(new Circle(event.pageX,event.pageY,randInt(0,20), canvas));	
+		
+			  myCircles.push(new Circle(event.pageX,event.pageY,randInt(0,20), canvas));	
+			  
 		});	
+
 		
 		var repeatOften = function(){
-			//canvas.DrawCircle(new Cor(randInt(0,500), randInt(0,500), 
-			//				  randInt(0,10), randomColor()));
-			
-			
 			
 			canvas.Clear();
+			//if(entered === 1)
+			//	myBoard.Update(Corp);
+
 			
 			for(var i = 0; i < myCircles.length; i++)
 				myCircles[i].Update();
-			/*
-			canvas.DrawCircle(new Cor(myCircle.x, myCircle.y), 
-								myCircle.r, randomColor());
-			if(touched === 0)
-				velocity += 9.8 / 60;
-			myCircle.y += velocity;	
-			if (myCircle.y >= canvas.CHeight - 2 * myCircle.r){
-				velocity = - velocity + damping;
-				if (velocity > 0){
-				damping = 0.5;
-				touched = 1;
-				velocity = 0;
-				}
-				//damping = -damping;
-			}
-			else if(myCircle.y <= 5){
-				velocity= - velocity - damping;
-			}
-		
-			draw(new Circle(100,100,10));
-			*/
+			
 
 			requestAnimationFrame(repeatOften);
 			//console.log(count+=1);
@@ -234,13 +323,6 @@ $(document).ready(
 		}
 		
 		requestAnimationFrame(repeatOften);
-		
-		
-		
-		
-                
-		
-
 		
 		
 		$(window).on('resize',function(){
