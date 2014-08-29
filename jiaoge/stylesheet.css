@@ -1,0 +1,200 @@
+body{ 
+font-size:22px; font-family:Arial, Helvetica, sans-serif;color:#363636;background:#f1e4f7 url(../images/bpbg.jpg) center top no-repeat;}
+
+html, body, div, span, h1, h2, h3, h4, h5, h6, em, img, strong, sub, sup, tt,dd, dl, dt, form, label, table, caption, tbody, tfoot, thead, tr, th, td,ul,li,p,a
+{ margin: 0; padding: 0;  }
+
+//.cbody{ margin:0 auto;width:982px; position:relative;background:#FFF;}
+input,select,textarea{ vertical-align:middle;}
+img{ border:0;}
+ul,li{ list-style-type:none;}
+a:link,a:visited{
+text-decoration:none;color:#010101;}
+a:hover{text-decoration:underline;color:#ED0909;}
+.overhide{overflow:hidden;text-indent:-100em; }
+.clear {clear: both;}
+.clearfix:after {clear: both;content: ' ';display: block;font-size: 0;line-height: 0;visibility: hidden;width: 0;height: 0;}
+.clearfix{zoom:1}  
+
+div{
+	border-color: black;
+	//border-style: dashed;
+	//margin: 20px 20px 20px 20px;
+}
+
+#nevigate li{
+	color: #D4BDDE;
+	font-size: 18px;
+	display: inline;
+	margin-left: 100px;
+}
+
+#nevigate li:hover{
+	color:white;
+}
+#nevigate{
+
+	//margin-left: 500px;
+}
+.pagehead{
+	
+	height: 50px;
+	
+	background-color: #52166b;
+	margin-bottom: 10px;
+}
+
+#jiaoge{
+	margin-left: 150px;
+	height: 50px;
+	line-height: 50px;
+	color:white;
+	float:left;
+	margin-right: 100px;
+}
+
+#bar{
+	margin-left: 700px;
+	margin-right: 150px;
+	color: white;
+	height: 50px;
+	line-height: 50px;
+	
+}
+
+
+.pagebody {
+	height: 800px;	
+}
+
+.pagebody #selector{
+	margin: 20px 20px 20px 150px;
+	float: left;
+	width:200px;
+	font-size: 18px;
+	//border-right-style: solid;
+
+}
+.pagebody h1{
+
+	margin-bottom: 100px;
+	//border-right-style: none;
+}
+
+.pagebody ul{
+	background-color: white;
+	margin-bottom: 100px;
+}
+
+.pagebody ul li{
+	margin: 5px 0px 5px 0px;
+}
+
+.pagebody ul li a{
+	color: #c058ed;
+}
+
+.pagebody form {
+	background-color: white;
+}
+.pagebody input {
+
+	margin: 5px 0px 5px 0px;
+}
+.pagebody #glasses{
+	padding-top: 30px;
+	margin: 20px 150px 20px 400px;
+}
+
+.pagebody #pickup {
+	margin: 0px 10px 0 10px;
+	font-style: italic;
+	//height:120px;
+}
+
+.pagebody .rowA{
+	background-color: white;
+	height: 200px;
+	margin:30px 10px 10px 10px;
+}
+
+.pagebody .rowA img{
+	margin: 5px 45px 5px 5px;
+	height: 190px;
+	width:180px;
+}
+
+.pagebody .rowB{
+	background-color: white;
+	height: 200px;
+	margin:10px 10px 10px 10px;
+}
+.pagebody .rowB img{
+	margin: 5px 45px 5px 5px;
+	height: 190px;
+	width:180px;
+}
+
+.pagebody .rowC{
+	background-color: white;
+	height: 200px;
+	margin:10px 10px 10px 10px;
+}
+
+.pagebody .rowC img{
+	margin: 5px 45px 5px 5px;
+	height: 190px;
+	width:180px;
+}
+
+
+.foot{
+	margin:0 auto;
+	color: white;
+	height: 200px;
+	background-color: #52166b;
+}
+
+.foot #jiaoOnline{
+	float: left;
+	margin: 0px 100px 0px 100px;
+	//border-bottom-style: solid;
+}
+
+.foot div h3{
+	font-size: 15px;
+	border-bottom: white 1px solid;
+}
+
+.foot #aboutPurchase{
+	float: left;
+	margin: 0px 100px 0px 100px;
+	//border-bottom-style: solid;
+}
+
+
+.foot #aboutProducts{
+	float: left;
+	margin: 0px 100px 0px 100px;
+	//border-bottom-style: solid;
+}
+
+
+.foot #aboutjiaojiao{
+	margin: 0px 100px 0px 100px;
+	//border-bottom-style: solid;
+}
+
+.foot:hover{
+	//color:#c058ed;;
+};
+
+.copyright{
+	margin: 0 auto;
+}
+
+.copyright h4{
+	font: ;
+	font-size: 13px;
+	text-align: center;
+}
