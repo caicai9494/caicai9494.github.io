@@ -44,6 +44,21 @@ div{
 	margin-bottom: 10px;
 }
 
+div.mosaic{
+	//background-color: black;
+	height: 300px;
+	background-image: url("img/tag/mosaic.jpg");
+}
+
+div#JJ{
+	font-size:30px;
+	color: white;
+	padding-top: 50px;
+	margin:0px 0px 0px 50px; 
+	width: 100px;
+	//background-color: white;
+}
+
 #jiaoge{
 	margin-left: 150px;
 	height: 50px;
@@ -64,6 +79,7 @@ div{
 
 
 .pagebody {
+	margin-top: 300px;
 	height: 800px;	
 }
 
@@ -95,6 +111,7 @@ div{
 }
 
 .pagebody form {
+	margin-top: -40px;
 	background-color: white;
 }
 .pagebody input {
